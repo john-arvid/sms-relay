@@ -3,11 +3,15 @@ from usim800.Sms import sms
 from usim800.Communicate import  communicate
 from usim800.Request import request
 from usim800.Info import info
+import serial
 
 class sim800(communicate):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.requests = request(baudrate=self._baudrate,path=self._path)
-        self.info = info(baudrate=self._baudrate,path=self._path)
-        self.sms = sms(baudrate=self._baudrate,path=self._path)
+    TIMMEOUT = 1
+
+    def __init__(self, baudrate, path):
+        self.port = serial.Serial(path, baudrate, timeout=sim800.TIMMEOUT)
+        super().__init__(self.port)
+        self.requests = request(self.port)
+        self.info = info(self.port)
+        self.sms = sms(self.port)
 

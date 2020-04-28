@@ -1,6 +1,7 @@
 from usim800.usim800 import sim800
+import phonenumbers
 
-phonenumber = 13245678
+phonenumber = 
 times = 1
 
 gsm = sim800(baudrate=9600,path='COM4')
